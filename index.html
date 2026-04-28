@@ -3,24 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FoxStore_1 🦊</title>
+    <title>FoxStore_1</title>
     <style>
         *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
         body{background:#1a1a1a;color:#fff;min-height:100vh;padding-bottom:70px;max-width:500px;margin:0 auto;}
-        
-        /* شاشات */
         .screen{display:none;padding:15px;}
         .screen.active{display:block;}
-
-        /* مربع */
         .card{background:#2d2d2d;border-radius:16px;padding:20px;margin:10px 0;}
         .card.center{text-align:center;margin-top:30px;}
-
-        /* إدخالات */
         input,textarea,select{display:block;width:100%;margin:8px 0;padding:12px;border-radius:10px;border:2px solid #444;background:#1a1a1a;color:#fff;font-size:0.95em;}
         input:focus,textarea:focus,select:focus{border-color:#ff6700;outline:none;}
-
-        /* أزرار */
         .btn{display:inline-block;padding:10px 18px;border-radius:10px;border:none;cursor:pointer;font-size:0.9em;font-weight:bold;text-align:center;margin:3px;transition:0.2s;}
         .btn:active{transform:scale(0.95);}
         .btn-o{background:#ff6700;color:#fff;}
@@ -30,20 +22,14 @@
         .btn-block{display:block;width:100%;padding:14px;margin:8px 0;}
         .btn-outline{background:transparent;border:2px solid #ff6700;color:#ff6700;}
         .btn-xs{padding:5px 10px;font-size:0.75em;}
-
-        /* شريط علوي */
         .topbar{display:flex;justify-content:space-between;align-items:center;padding:8px 0 15px;gap:8px;flex-wrap:wrap;}
         .topbar h2{font-size:1.3em;}
         .user-badge{background:#2d2d2d;padding:6px 12px;border-radius:20px;font-size:0.85em;cursor:pointer;}
-
-        /* تصنيفات وبحث */
         .cats{display:flex;gap:6px;margin:10px 0;flex-wrap:wrap;}
         .cats span{padding:7px 14px;border-radius:20px;background:#333;cursor:pointer;font-size:0.85em;}
         .cats span.active{background:#ff6700;font-weight:bold;}
         .search-row{display:flex;gap:6px;margin:8px 0;}
         .search-row input,.search-row select{padding:10px;border-radius:10px;border:2px solid #444;background:#1a1a1a;color:#fff;font-size:0.9em;width:100%;}
-
-        /* بطاقة تطبيق */
         .app-card{background:#2d2d2d;border-radius:14px;padding:14px;margin:10px 0;}
         .app-card .top{display:flex;gap:10px;align-items:flex-start;}
         .app-card .icon{width:48px;height:48px;border-radius:12px;background:#ff6700;display:flex;align-items:center;justify-content:center;font-size:1.4em;flex-shrink:0;}
@@ -55,24 +41,16 @@
         .app-card .stars-row button{background:none;border:none;font-size:1.3em;cursor:pointer;padding:0 1px;}
         .app-card .actions{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;align-items:center;}
         .stat{display:inline-flex;align-items:center;gap:3px;background:#333;padding:5px 10px;border-radius:20px;font-size:0.8em;cursor:pointer;border:none;color:#b3b3b3;}
-
-        /* شريط سفلي */
         .nav{position:fixed;bottom:0;left:0;right:0;background:#2d2d2d;display:flex;justify-content:space-around;padding:8px;z-index:100;max-width:500px;margin:0 auto;}
         .nav button{background:none;border:none;color:#b3b3b3;cursor:pointer;font-size:0.7em;text-align:center;padding:5px;}
         .nav button span{display:block;font-size:1.6em;}
         .nav button.active{color:#ff6700;font-weight:bold;}
-
-        /* منسدلة */
         .dropdown{background:#2d2d2d;border-radius:10px;border:1px solid #444;max-height:200px;overflow-y:auto;display:none;margin:4px 0;}
         .dropdown .item{padding:10px 14px;border-bottom:1px solid #333;cursor:pointer;display:flex;justify-content:space-between;align-items:center;}
         .dropdown .item:hover{background:#3a3a3a;}
-
-        /* منبثقة */
         .overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);z-index:200;justify-content:center;align-items:center;padding:15px;}
         .overlay.show{display:flex;}
         .popup{background:#2d2d2d;border-radius:16px;padding:20px;width:100%;max-width:400px;text-align:right;max-height:80vh;overflow-y:auto;}
-
-        /* متنوع */
         .id-tag{background:#444;color:#b3b3b3;font-size:0.7em;padding:2px 8px;border-radius:8px;margin:0 4px;}
         .green{color:#00c853;}
         .red{color:#ff4444;}
@@ -141,14 +119,15 @@
 <!-- ===== رفع ===== -->
 <div id="uploadScreen" class="screen">
     <div class="topbar"><h3>📤 رفع تطبيق</h3><button class="btn btn-outline btn-xs" onclick="show('store')">⬅ رجوع</button></div>
-    <input type="text" id="an" placeholder="اسم التطبيق *">
+    <input type="text" id="an" placeholder="اسم التطبيق *" autocomplete="off">
     <textarea id="ad" placeholder="وصف التطبيق" rows="3"></textarea>
     <select id="ac"><option value="tools">🛠️ أدوات</option><option value="games">🎮 ألعاب</option><option value="other">📦 أخرى</option></select>
-    <input type="url" id="al" placeholder="رابط (اختياري)">
-    <p class="small muted mt-2">أو ملف APK:</p>
-    <input type="file" id="af" accept=".apk,.zip">
-    <button class="btn btn-o btn-block" onclick="doUpload()">✅ نشر</button>
-    <p id="um" class="small" style="margin-top:6px;"></p>
+    <input type="url" id="al" placeholder="رابط التطبيق (ضع الرابط هنا)" autocomplete="off">
+    <p class="small muted" style="margin:8px 0;">📦 أو ارفع ملف (ملفات صغيرة فقط أقل من 4MB):</p>
+    <input type="file" id="af" accept=".apk,.zip,.xapk">
+    <p id="fileInfo" class="small muted" style="margin:4px 0;"></p>
+    <button class="btn btn-o btn-block" onclick="doUpload()">✅ نشر التطبيق</button>
+    <p id="um" class="small" style="margin-top:6px;min-height:18px;"></p>
 </div>
 
 <!-- ===== الملف الشخصي ===== -->
@@ -218,34 +197,35 @@
     </div>
 </div>
 
+<!-- ===== رسالة خطأ ===== -->
+<div class="overlay" id="alertOv">
+    <div class="popup">
+        <h3 id="alertTitle">تنبيه</h3>
+        <p id="alertMsg"></p>
+        <button class="btn btn-o btn-xs" onclick="document.getElementById('alertOv').classList.remove('show')" style="margin-top:10px;">حسناً</button>
+    </div>
+</div>
+
 <script>
 // ===== بيانات =====
 var OE='foxsd520@gmail.com',OP='Mackssmr',ON='Fox Owner',OI='FOX-0001';
 
 function _g(k){ try{ var d=localStorage.getItem(k); return d?JSON.parse(d):null; }catch(e){return null;} }
-function _s(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){ _fixLS(); } }
-function _fixLS(){ try{ localStorage.setItem('_t','1'); localStorage.removeItem('_t'); }catch(e){ alert('⚠️ يرجى فتح الموقع مباشرة وليس من داخل تطبيق آخر'); } }
+function _s(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){ showAlert('⚠️','مساحة التخزين ممتلئة! استخدم روابط خارجية بدل رفع الملفات.'); } }
 
 var DB=_g('fsdb');
-if(!DB||!DB.users||DB.users.length===0){
-    DB={users:[{email:OE,password:OP,name:ON,role:'owner',id:OI}],apps:[],messages:[],likes:{},ratings:{}};
-    _s('fsdb',DB);
-}
+if(!DB||!DB.users){DB={users:[{email:OE,password:OP,name:ON,role:'owner',id:OI}],apps:[],messages:[],likes:{},ratings:{}};_s('fsdb',DB);}
 var ME=_g('fsme');
 function saveDB(){ _s('fsdb',DB); }
 function saveME(){ _s('fsme',ME); }
+function showAlert(t,m){document.getElementById('alertTitle').textContent=t;document.getElementById('alertMsg').textContent=m;document.getElementById('alertOv').classList.add('show');}
 
 function uid(){return 'U'+Date.now().toString(36).slice(-6).toUpperCase()+Math.random().toString(36).slice(2,4).toUpperCase();}
 function aid(){return 'A'+Date.now()+Math.random().toString(36).slice(2,7);}
 function esc(t){var d=document.createElement('span');d.textContent=t;return d.innerHTML;}
 function ube(e){for(var i=0;i<DB.users.length;i++)if(DB.users[i].email===e)return DB.users[i];return null;}
 function ubi(id){for(var i=0;i<DB.users.length;i++)if(DB.users[i].id===id)return DB.users[i];return null;}
-function avgR(aid){
-    var r=DB.ratings[aid];if(!r)return 0;
-    var k=Object.keys(r);if(k.length===0)return 0;
-    var s=0;k.forEach(function(x){s+=r[x];});
-    return (s/k.length).toFixed(1);
-}
+function avgR(aid){var r=DB.ratings[aid];if(!r)return 0;var k=Object.keys(r);if(k.length===0)return 0;var s=0;k.forEach(function(x){s+=r[x];});return (s/k.length).toFixed(1);}
 
 // ===== تنقل =====
 var current='login';
@@ -254,24 +234,20 @@ function show(p){
     var screens=['loginScreen','registerScreen','storeScreen','uploadScreen','profileScreen','messagesScreen','ownerUsersScreen','ownerAppsScreen'];
     screens.forEach(function(id){var el=document.getElementById(id);if(el)el.classList.remove('active');});
     
-    if(p==='login'){document.getElementById('loginScreen').classList.add('active');document.getElementById('nav').style.display='none';}
-    else if(p==='register'){document.getElementById('registerScreen').classList.add('active');document.getElementById('nav').style.display='none';}
+    if(p==='login'||p==='register'){document.getElementById(p+'Screen').classList.add('active');document.getElementById('nav').style.display='none';}
     else {
         var map={store:'storeScreen',upload:'uploadScreen',profile:'profileScreen',messages:'messagesScreen',ownerUsers:'ownerUsersScreen',ownerApps:'ownerAppsScreen'};
         if(map[p])document.getElementById(map[p]).classList.add('active');
         document.getElementById('nav').style.display='flex';
-        
         if(ME)document.getElementById('hn').textContent='👋 '+ME.name;
         var ob=document.getElementById('ownerBox');
         if(ob)ob.style.display=(ME&&ME.email===OE&&p==='store')?'block':'none';
-        
         var navs=document.getElementById('nav').querySelectorAll('button');
         navs.forEach(function(b){b.classList.remove('active');});
         if(p==='store')navs[0].classList.add('active');
         else if(p==='upload')navs[1].classList.add('active');
         else if(p==='messages')navs[2].classList.add('active');
         else if(p==='profile')navs[3].classList.add('active');
-        
         if(p==='store')loadApps();
         if(p==='profile')loadProfile();
         if(p==='messages')loadMessages();
@@ -291,7 +267,7 @@ function doRegister(){
     var n=document.getElementById('rn').value.trim();
     var e=document.getElementById('re').value.trim().toLowerCase();
     var p=document.getElementById('rp').value;
-    if(!n||!e||!p){document.getElementById('reMsg').textContent='❌ مطلوب';return;}
+    if(!n||!e||!p){document.getElementById('reMsg').textContent='❌ كل الحقول مطلوبة';return;}
     if(ube(e)){document.getElementById('reMsg').textContent='❌ البريد مستخدم';return;}
     var u={email:e,password:p,name:n,role:'user',id:uid()};
     DB.users.push(u);saveDB();ME=u;saveME();show('store');
@@ -307,23 +283,32 @@ function loadApps(){
     var apps=DB.apps.slice();
     if(c!=='all')apps=apps.filter(function(a){return a.category===c;});
     if(s){apps=apps.filter(function(a){var p=ube(a.publisherEmail);return a.name.toLowerCase().indexOf(s)!==-1||(a.desc||'').toLowerCase().indexOf(s)!==-1||a.publisher.toLowerCase().indexOf(s)!==-1||(p?p.id.toLowerCase():'').indexOf(s)!==-1;});}
-    
     var cont=document.getElementById('appsContainer');
     if(!apps.length){cont.innerHTML='<p class="muted" style="text-align:center;margin-top:20px;">📭 لا توجد تطبيقات</p>';return;}
-    
     cont.innerHTML=apps.map(function(a){
         var p=ube(a.publisherEmail),pid=p?p.id:'???';
         var lk=(DB.likes[a.id]||[]).length;
         var liked=ME&&DB.likes[a.id]&&DB.likes[a.id].indexOf(ME.email)!==-1;
-        var av=avgR(a.id);
-        var mr=ME&&DB.ratings[a.id]?DB.ratings[a.id][ME.email]||0:0;
+        var av=avgR(a.id);var mr=ME&&DB.ratings[a.id]?DB.ratings[a.id][ME.email]||0:0;
         var ci=a.category==='games'?'🎮':a.category==='tools'?'🛠️':'📦';
         var cd=ME&&(ME.email===OE||ME.email===a.publisherEmail);
         var stars='';
         for(var i=1;i<=5;i++)stars+='<button style="color:'+(i<=mr?'#ffb300':'#555')+';" onclick="rate(\''+a.id+'\','+i+')">⭐</button>';
-        return '<div class="app-card"><div class="top"><div class="icon">'+ci+'</div><div class="info"><h3>'+esc(a.name)+'</h3><span class="pub" onclick="showPub(\''+a.publisherEmail+'\')">👤 '+esc(a.publisher)+' <span class="id-tag">'+esc(pid)+'</span></span>'+(a.desc?'<p class="desc">'+esc(a.desc)+'</p>':'')+'<div style="margin:3px 0;"><span style="color:#ffb300;">'+(av>0?av+' ⭐':'جديد')+'</span> <span class="muted small">('+(DB.ratings[a.id]?Object.keys(DB.ratings[a.id]).length:0)+')</span></div><div class="stars-row">'+stars+'</div></div></div><div class="actions"><button class="stat" onclick="like(\''+a.id+'\')">'+(liked?'❤️':'🤍')+' '+lk+'</button><span class="stat">📥 '+(a.downloads||0)+'</span>'+(a.link?'<a href="'+esc(a.link)+'" target="_blank" class="btn btn-b btn-xs" onclick="dload(\''+a.id+'\')">تحميل</a>':'')+(a.apkData?'<button class="btn btn-g btn-xs" onclick="dlAPK(\''+a.id+'\')">APK</button>':'')+(cd?'<button class="btn btn-r btn-xs" onclick="delApp(\''+a.id+'\')">🗑️</button>':'')+'</div></div>';
+        return '<div class="app-card"><div class="top"><div class="icon">'+ci+'</div><div class="info"><h3>'+esc(a.name)+'</h3><span class="pub" onclick="showPub(\''+a.publisherEmail+'\')">👤 '+esc(a.publisher)+' <span class="id-tag">'+esc(pid)+'</span></span>'+(a.desc?'<p class="desc">'+esc(a.desc)+'</p>':'')+'<div style="margin:3px 0;"><span style="color:#ffb300;">'+(av>0?av+' ⭐':'جديد')+'</span> <span class="muted small">('+(DB.ratings[a.id]?Object.keys(DB.ratings[a.id]).length:0)+')</span></div><div class="stars-row">'+stars+'</div></div></div><div class="actions"><button class="stat" onclick="like(\''+a.id+'\')">'+(liked?'❤️':'🤍')+' '+lk+'</button><span class="stat">📥 '+(a.downloads||0)+'</span>'+(a.link?'<a href="'+esc(a.link)+'" target="_blank" class="btn btn-b btn-xs" onclick="dload(\''+a.id+'\')">تحميل</a>':'')+(a.apkData?'<button class="btn btn-g btn-xs" onclick="dlAPK(\''+a.id+'\')">📥 APK</button>':'')+(cd?'<button class="btn btn-r btn-xs" onclick="delApp(\''+a.id+'\')">🗑️</button>':'')+'</div></div>';
     }).join('');
 }
+
+// ===== رفع تطبيق (معدل) =====
+document.getElementById('af').addEventListener('change',function(){
+    var f=this.files[0];
+    if(f){
+        var sizeMB=(f.size/1024/1024).toFixed(1);
+        document.getElementById('fileInfo').textContent='📎 '+f.name+' ('+sizeMB+' MB)';
+        if(f.size>4*1024*1024){
+            document.getElementById('fileInfo').textContent+=' ⚠️ حجم كبير! يفضل استخدام رابط.';
+        }
+    }
+});
 
 function doUpload(){
     var n=document.getElementById('an').value.trim();
@@ -332,26 +317,71 @@ function doUpload(){
     var l=document.getElementById('al').value.trim();
     var f=document.getElementById('af').files[0];
     var m=document.getElementById('um');
+    
     if(!n){m.textContent='❌ اسم التطبيق مطلوب';m.style.color='red';return;}
-    var app={id:aid(),name:n,desc:d,category:c,link:l||null,publisher:ME.name,publisherEmail:ME.email,publisherId:ME.id,downloads:0,createdAt:new Date().toISOString()};
-    function fin(){
+    if(!l&&!f){m.textContent='❌ ضع رابط أو ارفع ملف';m.style.color='red';return;}
+    
+    m.textContent='⏳ جاري النشر...';m.style.color='#ffb300';
+    
+    var app={
+        id:aid(),name:n,desc:d,category:c,
+        link:l||null,
+        publisher:ME.name,publisherEmail:ME.email,publisherId:ME.id,
+        downloads:0,createdAt:new Date().toISOString()
+    };
+    
+    function finish(){
         DB.apps.push(app);
         if(!DB.likes[app.id])DB.likes[app.id]=[];
         if(!DB.ratings[app.id])DB.ratings[app.id]={};
-        saveDB();
-        m.textContent='✅ تم النشر!';m.style.color='green';
-        document.getElementById('an').value='';document.getElementById('ad').value='';document.getElementById('al').value='';document.getElementById('af').value='';
-        setTimeout(function(){m.textContent='';},2500);
-        loadApps();
+        try{
+            saveDB();
+            m.textContent='✅ تم النشر بنجاح!';
+            m.style.color='green';
+            document.getElementById('an').value='';
+            document.getElementById('ad').value='';
+            document.getElementById('al').value='';
+            document.getElementById('af').value='';
+            document.getElementById('fileInfo').textContent='';
+            loadApps();
+        }catch(e){
+            m.textContent='❌ فشل الحفظ. استخدم رابط خارجي.';
+            m.style.color='red';
+            // تراجع عن الإضافة
+            DB.apps.pop();
+        }
     }
-    if(f){var r=new FileReader();r.onload=function(e){app.apkData=e.target.result;app.apkName=f.name;fin();};r.readAsDataURL(f);}
-    else{fin();}
+    
+    if(f&&f.size<=5*1024*1024){
+        var reader=new FileReader();
+        reader.onload=function(e){
+            app.apkData=e.target.result;
+            app.apkName=f.name;
+            finish();
+        };
+        reader.onerror=function(){
+            m.textContent='❌ فشل قراءة الملف';
+            m.style.color='red';
+        };
+        reader.readAsDataURL(f);
+    } else {
+        finish();
+    }
 }
 
 function rate(id,v){if(!ME)return;if(!DB.ratings[id])DB.ratings[id]={};DB.ratings[id][ME.email]=v;saveDB();loadApps();}
 function like(id){if(!ME)return;if(!DB.likes[id])DB.likes[id]=[];var i=DB.likes[id].indexOf(ME.email);if(i>-1)DB.likes[id].splice(i,1);else DB.likes[id].push(ME.email);saveDB();loadApps();}
 function dload(id){var a=DB.apps.find(function(x){return x.id===id;});if(a){a.downloads=(a.downloads||0)+1;saveDB();loadApps();}}
-function dlAPK(id){var a=DB.apps.find(function(x){return x.id===id;});if(a&&a.apkData){a.downloads=(a.downloads||0)+1;saveDB();var l=document.createElement('a');l.href=a.apkData;l.download=a.apkName||'app.apk';document.body.appendChild(l);l.click();document.body.removeChild(l);loadApps();}}
+function dlAPK(id){
+    var a=DB.apps.find(function(x){return x.id===id;});
+    if(a&&a.apkData){
+        a.downloads=(a.downloads||0)+1;saveDB();
+        var lnk=document.createElement('a');
+        lnk.href=a.apkData;lnk.download=a.apkName||'app.apk';
+        document.body.appendChild(lnk);lnk.click();document.body.removeChild(lnk);
+        loadApps();
+    }
+}
 
 function showPub(em){
     var p=ube(em);if(!p)return;
@@ -463,7 +493,6 @@ document.addEventListener('click',function(e){
 });
 
 // ===== بدء =====
-_fixLS();
 if(ME)show('store');
 </script>
 </body>
